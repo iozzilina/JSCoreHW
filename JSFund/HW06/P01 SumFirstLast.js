@@ -7,3 +7,5 @@ function sumFirstLast(arr){
     nums = arr.map(Number)
     return nums[0]+nums[nums.length-1];
 }
+
+sumFirstLast(['20', '30', '40']);
