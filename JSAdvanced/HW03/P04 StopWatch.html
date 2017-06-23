@@ -1,0 +1,65 @@
+<!--
+    
+Write a JS program that implements a web timer that supports minutes and seconds. 
+The user should be able to control it with buttons. Clicking [Start] resets the timer back to zero. 
+Only one of the buttons should be enabled at a time (you cannot stop the timer if it’s not running).
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="time" style="border:3px solid blue; text-align:center; font-size:2em; margin-bottom:10px">00:00</div>
+    <button id="startBtn">Start</button>
+    <button id="stopBtn" disabled="true">Stop</button>
+    <script>window.onload = function() { stopwatch(); }</script>
+
+    <script>
+        function stopwatch(){
+            let startBtn = document.getElementById('startBtn');
+            startBtn.addEventListener('click', startPressed);
+
+            let stopBtn = document.getElementById('stopBtn');
+            stopBtn.addEventListener('click', stopPressed);
+
+            let output = document.getElementById('time');
+            let timer = null;
+            let seconds = 0;
+
+            function setOutput(value){
+                output.textContent =`${('0' + Math.floor(value/60)).slice(-2)}:${('0' + value%60).slice(-2)}`;
+            }
+            
+            function startPressed(){ 
+                seconds = 0;  
+                setOutput(seconds);  
+                stopBtn.disabled=false;
+                startBtn.disabled=true;
+                timer = setInterval(tick, 1000);
+                //alert("started");
+            }
+
+            function stopPressed(){                 
+                stopBtn.disabled=true;
+                startBtn.disabled=false;
+                clearInterval(timer); 
+                //alert("stopped");
+            }
+
+            function tick(){
+                //console.log('tick')
+                seconds++; 
+                setOutput(seconds); 
+                           
+            }      
+        }
+    </script>
+
+</body>
+</html> 

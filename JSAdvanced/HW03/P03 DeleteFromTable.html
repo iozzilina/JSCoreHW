@@ -1,0 +1,59 @@
+<!--
+Write a JS program that takes an e-mail from an input field and deletes matching rows from a table. 
+If no entry is found, an error should be displayed in a <div> with ID "results". 
+The error should read "Not found."
+-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <table border="1" id="customers">
+    <tr><th>Name</th><th>Email</th></tr>
+    <tr><td>Eve</td><td>eve@gmail.com</td></tr>
+    <tr><td>Nick</td><td>nick@yahooo.com</td></tr>
+    <tr><td>Didi</td><td>didi@didi.net</td></tr>
+    <tr><td>Tedy</td><td>tedy@tedy.com</td></tr>
+    </table>
+
+    Email: <input type="text" name="email" />
+    <button onclick="deleteByEmail()">Delete</button>
+    <div id="result" />
+
+    <script>
+    
+    function deleteByEmail(){
+
+        result = document.getElementById('result');       
+
+        let target = document.getElementsByName('email')[0].value;        
+
+        let customerEmails = document.querySelectorAll('#customers tr td:last-child');  
+
+
+        for(let email of customerEmails){
+           
+            if(email.textContent === target){
+               
+                let row = email.parentNode;
+                row.parentNode.removeChild(row);
+                result.textContent = 'Deleted.';
+                deleted = true;
+                return;               
+            }else{
+                result.textContent = 'Not found.';
+            }
+        }
+    }
+    
+    </script>
+
+</body>
+</html>

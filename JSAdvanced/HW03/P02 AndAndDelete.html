@@ -1,0 +1,49 @@
+<!--Extend the previous problem to display a [Delete] link after each list item. 
+Clicking it, should delete the item with no confirmation.-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>List of Items</h1>
+
+    <ul id="items">        
+    </ul>
+
+    <input type="text" id="newText" />
+
+    <input type="button" value="Add" onclick="addItem()">
+<script>
+    function addItem() {
+        let list = document.querySelector('#items');
+        let newListItem = document.getElementById('newText');
+
+        let text = newListItem.value;
+        // console.log(newListItem);
+
+        let newLi = document.createElement("li");
+        newLi.textContent = text +' ';
+        let deleteLink = document.createElement('a');
+        deleteLink.textContent = '[Delete]';
+        deleteLink.href = '#';
+        deleteLink.addEventListener('click',deleteItem);
+        newLi.appendChild(deleteLink);
+        list.appendChild(newLi);            
+    
+
+    function deleteItem(){
+            //alert('Element deleted!')
+            document.getElementById('items').removeChild(newLi);
+
+        }
+    }
+</script>
+
+</body>
+</html>

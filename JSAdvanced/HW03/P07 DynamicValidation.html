@@ -1,0 +1,48 @@
+<!--
+    
+Write a JS function that dynamically validates an email input field when it is changed. 
+If the input is invalid, apply to it the style "error". 
+Do not validate on every keystroke, as it is annoying for the user, only watch of change events.
+
+A valid email will be in format: <name>@<domain>.<extension>
+
+Only lowercase Latin characters are allowed for any of the parts of the email. 
+If the input is valid, clear the style.
+
+-->
+
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8"><title>Focus</title>
+  <style>.error { border: 2px solid red; }</style>
+</head>
+
+<body onload="validate()">
+  <label for="email">Enter email:</label>
+  <input id="email" type="text"/>
+
+  <script>
+    function validate() {
+        regex = /([a-z]+)\@([a-z]+)\.([a-z]+)/g;
+        
+        let input = document.getElementById('email');
+
+        input.addEventListener('change', check);
+
+        function check(event){
+           console.log(event.target.value);
+
+           match = regex.exec(event.target.value);
+           console.log(match);
+
+           if(match==null){
+             event.target.className = "error";
+           } else {
+             event.target.removeAttribute('class');
+           }
+        }
+    }
+  </script>
+
+</body>
+</html>
