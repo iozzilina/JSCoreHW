@@ -1,0 +1,84 @@
+<!--
+You will be given an HTML file, containing the markup of a timer with 
+spans for seconds, minutes and hours and buttons to [Start] and [Pause] the timer. 
+Your task is to create a JavaScript application that starts the timer whenever the
+[Start] button is pressed and pauses it when the [Pause] button is pressed.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Timer</title>
+    <script src="../../jquery-3.1.1.min.js"></script> 
+    <style>
+        #timer {
+            font-size: 5em;
+        }
+    </style>
+</head>
+<body>
+<div id="timer">
+    <span id="hours" class="timer">00</span>:
+    <span id="minutes" class="timer">00</span>:
+    <span id="seconds" class="timer">00</span>
+    <button id="start-timer">Start</button>
+    <button id="stop-timer">Stop</button>
+</div>
+<script>
+    function timer() {
+
+        let hr = $('#hours');
+        let min = $('#minutes');
+        let sec = $('#seconds');
+
+        let counter=0;
+
+        $('#start-timer').on('click', start);
+
+        $('#stop-timer').on('click', function(){
+            clearInterval(counter);    
+             $('#start-timer').on('click', start);
+        });
+
+
+        function start(){
+            counter = setInterval(step, 1000);
+            $('#start-timer').off('click'); 
+        }
+
+        
+        function step(){ 
+            sec.val(+sec.val()+1);
+
+            if(sec.val()>59){
+                sec.val('00');
+                min.val(+min.val()+1);
+                min.text(formatTime(min.val()));
+            }
+
+            if(min.val()>59){
+                min.val('00');
+                hr.val(+hr.val()+1);
+                min.text(formatTime(min.val()));
+                hr.text(formatTime(hr.val()));
+            }
+
+            sec.text(formatTime(sec.val()));      
+        }
+
+        function formatTime(value){
+            let partial = `${('0' + value%60).slice(-2)}`;
+            return partial;
+        }
+        
+
+    }
+</script>
+<script>
+    window.onload=function(){
+        timer();
+    }
+</script>
+</body>
+</html>

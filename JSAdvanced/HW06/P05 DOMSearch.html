@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Search</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"
+            integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+            crossorigin="anonymous"></script>
+    <style>
+        .add-controls, .search-controls {
+            width: 20em;
+            height: 2em;
+        }
+        input {
+            position: absolute;
+            left:6em;
+        }
+        .button {
+            background-color: darkgrey;
+            color: white;
+            font-weight: bold;
+            position: absolute;
+            left: 15em;
+            border: 1px solid black;
+            padding: 0 5px 0 5px;
+        }
+        .result-controls .button {
+            position: relative;
+            left: 0;
+            font-size: 50%;
+            margin-right:1em;
+            padding: 0;
+            bottom: 3px;
+        }
+        li {
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+<div id="content"></div>
+<script>
+    function domSearch(selector, isCaseSensitive) {
+        // TODO
+        let container = $(selector);
+        container.attr('class','items-control');
+
+        // add controls
+
+        let addContainer =$('<div>');
+        addContainer.attr('class','add-controls');
+       
+        let addItemLabel = $("<label>").text('Enter text: ');       
+        let addItemText = $('<input>');
+      
+        addItemText.appendTo(addItemLabel);       
+        addItemLabel.appendTo(addContainer);
+
+        let addItemBtn = $('<a href="#" class="button">Add</a>');
+        addItemBtn.css('display','inline-block');
+        addItemBtn.on("click", addItem);
+      
+       
+        addItemBtn.appendTo(addContainer);
+
+        //search controls
+        let searchContainer = $('<div>');
+        searchContainer.attr('class','search-controls');
+
+        let searchLabel = $("<label>").text('Search: ');
+        let searchText = $('<input type="text">');
+        searchText.on("keyup", searchWString);
+        
+        searchText.appendTo(searchLabel);
+        searchLabel.appendTo(searchContainer);
+
+        //result controls
+
+        let resultContainer = $('<div>');
+        resultContainer.attr('class','result-controls');
+
+        let list = $('<ul>');
+        list.attr('class','items-list');
+       
+        list.appendTo(resultContainer);
+
+        
+        // add boxes to main container
+        addContainer.appendTo(container);
+        searchContainer.appendTo(container);
+        resultContainer.appendTo(container);
+
+
+        // add new
+        function addItem(){
+            //console.log(`item ${$('#item').val()} to be added`);
+            let li = $('<li class="list-item">');
+            let liBtn = $('<a class="button">X</a>')
+                .on('click', function(){
+                li.remove();
+            });
+            let liText = $(`<strong>${$('.add-controls input').val()}</strong>`);
+
+            liBtn.appendTo(li);
+            liText.appendTo(li);
+            li.appendTo(list);
+        }
+
+        function searchWString(){
+        let textToSearch = $('.search-controls input').val();
+        let options = isCaseSensitive ? "g" : "gi";
+        let regex = new RegExp(textToSearch, options);
+        //console.log(regex);
+        let allItems = $('ul li.list-item strong').toArray();
+        //console.log(allItems);
+        for (let item of allItems){
+            if (!$(item).text().match(regex))
+                $(item).parent().css('display', 'none');
+            else
+                $(item).parent().css('display', '');
+            }
+        }        
+        
+    }
+</script>
+
+<script>
+    domSearch("#content",false);
+</script>
+</body>
+</html>

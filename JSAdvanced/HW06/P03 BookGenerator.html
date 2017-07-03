@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Generator</title>
+    <script src="../../jquery-3.1.1.min.js"></script> 
+</head>
+<body>
+<div id="wrapper">
+
+</div>
+
+
+<script> 
+    function createBook(selector, bookTitle, authorName, isbn) {
+        
+        let bookGenerator = (function (){
+
+            let id = 1;
+
+            return function(selector, bookTitle, authorName, isbn){
+                let container = $(selector); //get wrapper
+                let bookContainter  = $('<div>'); //create outer div for each book
+                bookContainter.attr('id',`book${id}`);
+                bookContainter.css('border','none');
+
+                $(`<p class="title">${bookTitle}</p>`).appendTo(bookContainter);
+                $(`<p class="author">${authorName}</p>`).appendTo(bookContainter);
+                $(`<p class="isbn">${isbn}</p>`).appendTo(bookContainter);
+
+                let selectBnt = $(`<button>Select</button>`);
+                let deSelectBnt = $(`<button>Deselect</button>`);
+
+                selectBnt.on('click',()=> bookContainter.css('border','2px solid blue'));
+                deSelectBnt.on('click',()=> bookContainter.css('border','none'));
+
+                selectBnt.appendTo(bookContainter);
+                deSelectBnt.appendTo(bookContainter);
+                bookContainter.appendTo(container);
+                id++; //this becomes static to the script
+            };
+        }()); ///uuuuugh.... what a syntax!!!
+
+        bookGenerator(selector, bookTitle, authorName, isbn);  
+
+    }
+</script>
+
+
+<script>
+    window.onload = function () {
+        createBook("#wrapper", "Alice in Wonderland", "Lewis Carroll", 1111);
+        createBook("#wrapper", "book 2", "i want pie", 2222);
+        createBook("#wrapper", "book 3", "boooooooo", 3333);
+        createBook("#wrapper", "book 4", "sdfe eadagad g", 4444);  
+
+    }
+</script>
+</body>
+</html>
