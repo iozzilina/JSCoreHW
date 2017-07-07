@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../jquery-3.1.1.min.js"></script> 
+</head>
+<body>   
+    <input type="text" id="num1" />
+    <input type="text" id="num2" />
+    <input type="text" id="result" readonly />
+    <br>
+    <button id="sumButton">
+        Sum</button>
+    <button id="subtractButton">
+        Subtract</button>
+
+    <script>
+       function getModel(){
+           console.log('function loaded');
+
+           let input1, input2, result;
+
+           function init(numSel1, numSel2,resultSel){
+               input1 = $(numSel1);
+               input2 = $(numSel2);
+               result = $(resultSel);
+           }
+
+           function add(){
+                result.val(Number(input1.val()) + Number(input2.val()));
+           }
+
+           function subtract(){
+                result.val(Number(input1.val()) - Number(input2.val()));
+           }
+
+           return {
+               init,add,subtract
+           };          
+       }
+        
+    </script>
+
+    <script>
+        $(function (){
+            let model = getModel();
+            model.init('#num1','#num2','#result');
+            $('#sumButton').click(model.add);
+            $('#subtractButton').click(model.subtract);
+        });        
+    </script>
+</body>
+</html>
