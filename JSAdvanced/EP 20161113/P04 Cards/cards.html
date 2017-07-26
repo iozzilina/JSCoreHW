@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cards</title>
+    <style>
+        div.card {
+            display: inline-block; padding: 10px; margin: 10px;
+            width: 50px; height: 80px; background: #EEE;
+            border: 3px solid #DDD; border-radius: 5px;
+            font-size: 18pt; text-align: center; line-height: 75px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div id="main"></div>
+<script>
+    function cardDeckBuilder(selector) {
+        // TODO: return the card builder   
+
+        let suits = {
+            'D':'\u2666',
+            'S':'\u2660',
+            'H':'\u2665',
+            'C':'\u2663'
+             }
+        
+        function reverseCards(){
+                let containerDiv = $(selector);   
+                let cards = $(`${selector} div`).toArray();
+                cards.reverse();
+                containerDiv.empty();
+                for(let card of cards){
+                    $(card).click(reverseCards);
+                    containerDiv.append($(card)); 
+                }
+                console.log(cards);
+            }      
+
+        let builder = {     
+            addCard(face,suit){
+                let containerDiv = $(selector);    
+                let card = $('<div>').addClass('card').html(`${face} ${suits[suit]}`);
+                card.click(reverseCards);
+                containerDiv.append(card);    
+            }
+        }      
+
+        return builder ;
+    }
+</script>
+<script>
+    $(function() {
+        let builder = cardDeckBuilder("#main");
+        console.log(builder.addCard);
+        console.log("making 10 D");
+        builder.addCard("10", "D");
+        console.log("making K S");
+        builder.addCard("K", "S");
+        console.log("making Q H");
+        builder.addCard("Q", "H");
+        console.log("making 4 C");
+        builder.addCard("4", "C");
+    });
+</script>
+</body>
+</html>
