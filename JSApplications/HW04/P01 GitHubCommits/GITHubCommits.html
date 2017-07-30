@@ -1,0 +1,66 @@
+<!-- 
+The loadCommits function should get the username and repository from the HTML textboxes with 
+ids "username" and "repo" and make a GET request to the Github API:
+"https://api.github.com/repos/<username>/<repository>/commits"
+Swap <username> and <repository> with the ones from the HTML:
+•	In case of success, for each entry, add a list item (li) in the unordered list (ul) 
+    with id= "commits" with text in the format:
+    "<commit.author.name>: <commit.message>" 
+•	In case of error and a single list item (li) with text in the format:
+    "Error: <error.status> (<error.statusText>)"
+
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Github Commits</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+GitHub username:
+<input type="text" id="username" value="nakov" /> <br>
+Repo: <input type="text" id="repo" value="nakov.io.cin" />
+<button onclick="loadCommits()">Load Commits</button>
+<ul id="commits"></ul>
+<script>
+    function loadCommits() {
+        let userName = $("#username").val();
+        let repoName = $("#repo").val();
+        console.log(userName);
+        console.log(repoName);
+        let url = `https://api.github.com/repos/${userName}/${repoName}/commits`;
+        console.log(url);
+        let container = $("#commits");
+        container.empty();
+
+      //i like!!! 
+      let request = {
+        url: url,
+        method: "GET",
+        success: displayJson,
+        error: displayError
+      }
+
+      $.ajax(request);
+
+      //$.get(`https://api.github.com/users/${username}/repos`).then(displayJson);
+      function displayError(error) {       
+        container.append($(`<li>Error: ${error.status} (${error.statusText})</li>`));
+      }
+
+      function displayJson(commits) {
+        console.log(commits);
+        for (let item of commits) {
+          console.log(item.commit);
+          let li = $('<li>');
+          li.text(`${item.commit.author.name}: ${item.commit.message}`);
+          li.appendTo(container);
+        }
+      }
+    }
+</script>
+</body>
+</html>
