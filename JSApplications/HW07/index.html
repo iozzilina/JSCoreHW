@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Book Library</title>
+    <script src="./scripts/jquery-3.1.1.min.js"></script>
+    <script src="./scripts/app.js"></script>
+    <link rel="stylesheet" href="./styles/book-library.css">
+</head>
+
+<body>
+    <header id="menu">
+        <a href="#" id="linkHome">Home</a>
+        <a href="#" id="linkLogin">Login</a>
+        <a href="#" id="linkRegister">Register</a>
+        <a href="#" id="linkBooks">List Books</a>
+        <a href="#" id="linkCreate">Create Book</a>
+        <a href="#" id="linkLogout">Logout</a>
+        <span id="loggedInUser">Welcome!</span>
+    </header>
+
+    <main>
+        <section id="loadingBox" class="notification">Loading....</section>
+        <section id="infoBox" class="notification">Info</section>
+        <section id="errorBox" class="notification">Error</section>
+
+        <section id="viewHome">
+            <h1>Welcome</h1>
+            <div class="content">
+                <p>Welcome to our library</p>
+            </div>
+        </section>
+
+        <section id="viewLogin">
+            <h1>Please login</h1>
+            <div class="content">
+                <form>
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password">
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+        </section>
+
+        <section id="viewRegister">
+            <h1>Please register here</h1>
+            <div class="content">
+                <form>
+                    <label for="register-username">Username</label>
+                    <input type="text" id="register-username">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password">
+                    <label for="resister-confirm-password">Confirm Password</label>
+                    <input type="password" id="resister-confirm-password">
+                    <input type="submit" value="Register">
+                </form>
+            </div>
+        </section>
+
+        <section id="viewBooks">
+            <h1>Books</h1>
+            <div class="content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>                       
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="viewCreate">
+            <h1>Create new book</h1>
+            <div class="content">
+                <form>
+                    <label for="new-title">Title</label>
+                    <input type="text" id="new-title">
+                    <label for="new-author">Author</label>
+                    <input type="text" id="new-author">
+                    <label for="new-description">Descrtiption</label>
+                    <textarea id="new-description"></textarea>
+                    <input type="submit" value="Create">
+                </form>
+            </div>
+        </section>
+
+        <section id="viewEdit">
+            <h1>Create new book</h1>
+            <div class="content">
+                <form>
+                    <label for="edit-title">Title</label>
+                    <input type="text" id="edit-title">
+                    <label for="edit-author">Author</label>
+                    <input type="text" id="edit-author">
+                    <label for="edit-description">Descrtiption</label>
+                    <textarea id="edit-description"></textarea>
+                    <input type="submit" value="Edit">
+                </form>
+            </div>
+        </section>
+
+        <section id="viewLogout">
+            <h1>You are now logged out!</h1>            
+        </section>
+
+
+    </main>
+
+    <footer>
+        BookLibrary - Sipmple SPA application
+    </footer>
+
+
+</body>
+
+</html>
