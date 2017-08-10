@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bus Schedule</title>
+    <style>
+        #schedule {
+            text-align: center;
+            width: 400px;
+        }
+
+        input {
+            width: 120px;
+        }
+
+        #info {
+            background-color: aquamarine;
+            border: 1px solid black;
+            margin: 0.25em;
+        }
+
+        .info {
+            font-size: 1.5em;
+            padding: 0.25em;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+    <div id="schedule">
+        <div id="info"><span class="info">Not Connected</span></div>
+        <div id="controls">
+            <input id="depart" value="Depart" type="button" onclick="result.depart()">
+            <input id="arrive" value="Arrive" type="button" onclick="result.arrive()" disabled="true">
+        </div>
+    </div>
+    <script>
+        function solve() {
+
+            let infoDivSpan = $('#info span');
+            let departBtn = $('#depart');
+            let arriveBtn = $('#arrive');
+
+            let currStop = {
+                id: 'depot',
+                name: 'Depot'
+            };
+
+            let nextStop = {
+                id: 'depot'
+            }
+
+            function requestNextStop(id) {
+                let nextStopRequest = {
+                    url: `https://judgetests.firebaseio.com/schedule/${id}.json`,
+                    success: resetStops,
+                    error: displayError
+                };
+                return nextStopRequest;
+            }
+
+
+            function resetStops(stopData) {              
+                currStop.id = nextStop.id;
+                currStop.name = stopData.name;
+                nextStop.id = stopData.next;              
+            }
+
+            function displayError(error) {
+                $('#info span').text(`Error`);
+                $('#depart').attr('disabled', true);
+                $('#arrive').attr('disabled', true);
+            }
+
+            //get first stop info
+            $.ajax(requestNextStop(nextStop.id));
+
+            function depart() {   
+                $('#info span').text(`Next stop ${currStop.name}`);            
+                $('#depart').attr('disabled', true);
+                $('#arrive').attr('disabled', false);                
+            }
+
+            function arrive() {   
+               $('#info span').text(`Arriving at ${currStop.name}`);            
+               $('#depart').attr('disabled', false);
+               $('#arrive').attr('disabled', true);               
+                //get next stop info
+                $.ajax(requestNextStop(nextStop.id));
+            }
+
+            return {
+                depart,
+                arrive
+            };
+        }
+
+        let result = solve();
+    </script>
+</body>
+
+</html>

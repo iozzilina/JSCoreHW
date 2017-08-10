@@ -1,0 +1,124 @@
+Create an application at kinvey.com Create a collection biggestCatches(angler, weight, species, location, bait, captureTime) to hold information about the largest fish caught.
+
+•	angler - string representing the name of the person who caught the fish
+•	weight - floating point number representing the weight of the fish in kilograms
+•	species - string representing the name of the fish species
+•	location - string representing the location where the fish was caught
+•	bait - string representing the bait used to catch the fish
+•	captureTime - integer number representing the time needed to catch the fish in minutes
+
+
+HTML Template
+You are given an HTML template to test your code, your task is to attach handlers to the [Load], [Update], [Delete] and [Add] buttons, which make the appropriate GET, PUT, DELETE and POST requests respectively. 
+
+catch.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Biggest Catch</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="catch.js"></script>
+    <style>
+        h1 { text-align: center; }
+        input { display: block; }
+        div { border: 1px solid black; padding: 5px; display: inline-table; width: 24%; }
+        div#aside { margin-top: 8px; width: 15%; border: 2px solid grey; }
+        div#catches{ width:auto; }
+        button { display: inline-table; margin: 5% 0 5% 5%; width: 39%; }
+        button.add { width: 90%; }
+        button.load { width: 90%; padding: 10px; }
+        button.load { vertical-align: top; }
+        fieldset { display: inline-table; vertical-align: top; }
+        fieldset#main { width: 70%; }
+    </style>
+</head>
+<body>
+<h1>Biggest Catches</h1>
+<fieldset id="main">
+    <legend>Catches</legend>
+    <div id="catches">
+        <div class="catch" data-id="<id-goes-here>">
+            <label>Angler</label>
+            <input type="text" class="angler" value="Paulo Amorim"/>
+            <label>Weight</label>
+            <input type="number" class="weight" value="636"/>
+            <label>Species</label>
+            <input type="text" class="species" value="Atlantic Blue Marlin"/>
+            <label>Location</label>
+            <input type="text" class="location" value="Vitória, Brazil"/>
+            <label>Bait</label>
+            <input type="text" class="bait" value="trolled pink"/>
+            <label>Capture Time</label>
+            <input type="number" class="captureTime" value="80"/>
+            <button class="update">Update</button>
+            <button class="delete">Delete</button>
+        </div>
+    </div>
+</fieldset>
+<div id="aside">
+    <button class="load">Load</button>
+    <fieldset id="addForm">
+        <legend>Add Catch</legend>
+        <label>Angler</label>
+        <input type="text" class="angler"/>
+        <label>Weight</label>
+        <input type="number" class="weight"/>
+        <label>Species</label>
+        <input type="text" class="species"/>
+        <label>Location</label>
+        <input type="text" class="location"/>
+        <label>Bait</label>
+        <input type="text" class="bait"/>
+        <label>Capture Time</label>
+        <input type="number" class="captureTime"/>
+        <button class="add">Add</button>
+    </fieldset>
+</div>
+<script>attachEvents()</script>
+</body>
+</html>
+
+
+You are given an example catch in the template to show you where and how you should insert the catches. Notice that the div containing the catch has an attribute data-id that should store the _id of the entry given by Kinvey. 
+
+Kinvey will automatically create the following REST services to access your data:
+•	List All Catches
+o	Endpoint: https://baas.kinvey.com/apdata/[:appId]/biggestCatches
+o	Method: GET
+o	Headers: 
+	Basic Authorization with user credentials
+o	Returns (JSON)
+
+
+•	Create a New Catch
+o	Endpoint: https://baas.kinvey.com/apdata/[:appId]/biggestCatches
+o	Method: POST
+o	Headers:
+	Basic Authorization with user credentials
+	Content-type: application/json
+o	Request body (JSON): {"angler":"…", "weight":…, "species":"…", "location":"…", "bait":"…", "captureTime":…}
+
+
+•	Update a Catch
+o	Endpoint: https://baas.kinvey.com/apdata/[:appId]/biggestCatches/[:catchId]
+o	Method: PUT
+o	Headers:
+	Basic Authorization with user credentials
+	Content-type: application/json
+o	Request body (JSON): {"angler":"…", "weight":…, "species":"…", "location":"…", "bait":"…", "captureTime":…}
+
+
+•	Delete a Catch
+o	Endpoint: https://baas.kinvey.com/apdata/[:appId]/biggestCatches/[:catchId]
+o	Method: DELETE
+o	Headers:
+	Basic Authorization with user credentials
+	Content-type: application/json
+
+
+Pressing the [Load] button should list all catches, 
+pressing a catch's [Update] button should send a PUT requests updating that catch in kinvey.com. 
+Pressing a catch's [Delete] button should delete the catch both from kinvey and from the page. 
+Pressing the [Add] button should submit a new catch with the values of the inputs in the Add fieldset.
